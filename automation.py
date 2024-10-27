@@ -1,6 +1,20 @@
 import subprocess
 import time
 import psutil  # To check if Gazebo is running
+import re
+
+def read_file(file_path):
+    command_list = []
+    # Read the file and convert it into a list of lists
+    with open(file_path, 'r') as file:
+        for line in file:
+            # Use regex to capture the command and value from the format command(value)
+            match = re.match(r"(\w+)\((.+)\)", line.strip())
+            if match:
+                command = match.group(1)
+                value = match.group(2)
+                command_list.append([command, value])
+    return command_list
 
 # Function to run the shell script for Gazebo
 def run_gazebo():
@@ -52,12 +66,13 @@ def execute_plan(plan):
         print("\nNo invalid commands encountered.")
 
 if __name__ == "__main__":
-    # Sample plan list containing commands
-    plan = [["MOVE", 0.6], ["ROTATE", 90], ["MOVE", 0.6], ["ROTATE", 90], ["MOVE", 0.6], ["ROTATE", 90], ["MOVE", 0.6], ["ROTATE", 90]]
-
+    # Specify the path to your file
+    file_path = 'llm_output.txt'
+    command_list = read_file(file_path)
+    # Output the result
+    print(command_list)
     # Start Gazebo simulation
     run_gazebo()
 
     # Execute the plan sequentially
-    execute_plan(plan)
-
+    execute_plan(command_list)
