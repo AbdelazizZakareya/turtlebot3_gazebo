@@ -1,0 +1,10 @@
+<!-- ~/catkin_ws/src/turtlebot_mover/launch/automated_simulation.launch -->
+<launch>
+    <param name="use_sim_time" value="false" />
+    <!-- Pass the distance as argument -->
+    <arg name="distance" default="1.0" />
+    <!-- Launch the custom move_forward node -->
+    <node name="move_node" pkg="turtlebot3" type="move.py" output="screen">
+        <param name="distance" value="$(arg distance)" />
+    </node>
+</launch>

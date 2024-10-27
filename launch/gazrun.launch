@@ -1,0 +1,10 @@
+<!-- ~/catkin_ws/src/turtlebot_mover/launch/start_gazebo.launch -->
+<launch>
+    <arg name="reset" default="true" />
+    <!-- Set the TurtleBot3 model -->
+    <arg name="model" default="waffle" />
+    <env name="TURTLEBOT3_MODEL" value="$(arg model)" />
+
+    <!-- Launch the TurtleBot3 Gazebo simulation -->
+    <include file="$(find turtlebot3_gazebo)/launch/turtlebot3_world.launch"/>
+</launch>
